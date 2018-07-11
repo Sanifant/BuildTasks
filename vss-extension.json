@@ -3,7 +3,7 @@
     "id": "build-release-task",
     "name": "SampleManager Build Tasks",
     "version": "0.0.1",
-    "publisher": "Stefan Petersen",
+    "publisher": "stefanpetersen",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
