@@ -29,17 +29,54 @@
             "type": "string",
             "label": "Instance Name",
             "defaultValue": "VGSM",
-            "required": false,
+            "required": true,
             "helpMarkDown": "Specify the name of the new Instance"
         },
         {
-            "name": "samplebool",
+            "name": "SMVersion",
+            "type": "string",
+            "label": "SampleManager Version",
+            "defaultValue": "false",
+            "required": true,
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1"
+        },
+        {
+            "name": "SQC",
             "type": "boolean",
-            "label": "Sample Boolean",
+            "label": "Install SQC Module",
             "defaultValue": "false",
             "required": false,
-            "helpMarkDown": "If this is true, this task will fail if any errors are written to the StandardError stream.",
-            "groupName": "advanced"
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "Modules"
+        },
+        {
+            "name": "SQCFolder",
+            "type": "string",
+            "label": "SQC Module Folder",
+            "defaultValue": "false",
+            "required": false,
+            "visibleRule": "SQC == true",
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "Modules"
+        },
+        {
+            "name": "Stability",
+            "type": "boolean",
+            "label": "Install SQC Module",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "Modules"
+        },
+        {
+            "name": "StabilityFolder",
+            "type": "string",
+            "label": "Stability Module Folder",
+            "defaultValue": "false",
+            "required": false,
+            "visibleRule": "Stability == true",
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "Modules"
         }
     ],
     "execution": {

@@ -2,16 +2,19 @@
     "manifestVersion": 1,
     "id": "build-release-task",
     "name": "SampleManager Build Tasks",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "stefanpetersen",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Tools for building/releasing with Fabrikam. Includes one build/release task.",
+    "description": "Tools for building/releasing SampleManager Instances.",
     "categories": [
         "Build and release"
+    ],
+    "galleryFlags" : [
+        "Public"
     ],
     "icons": {
         "default": "images/SampleManager.png"        

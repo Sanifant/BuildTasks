@@ -1,10 +1,11 @@
 {
-  "name": "SampleManagerBuildTask",
-  "version": "1.0.0",
+  "name": "sampleManagerBuildTask",
+  "version": "0.9.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build" : "tfx extension create --manifest-globs vss-extension.json --rev-version",
+    "test": "Tests\\Test-Package.ps1"
   },
   "keywords": [],
   "author": "",
