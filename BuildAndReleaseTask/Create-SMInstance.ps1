@@ -114,12 +114,12 @@ try{
         Write-VstsTaskDebug $InstanceExeFolder
 
         Write-VstsTaskVerbose "Stopping services";
-        Stop-Service "smp$InstanceName";
-        Stop-Service "smplock$InstanceName";
-        Stop-Service "SMDaemon$InstanceName";
-        Stop-Service "smptq$InstanceName";
-        Stop-Service "smpWCF$InstanceName";
-        Stop-Service "smpbatch$InstanceName*";
+        Stop-Service "smp$InstanceName" -ErrorAction SilentlyContinue; 
+        Stop-Service "smplock$InstanceName" -ErrorAction SilentlyContinue;
+        Stop-Service "SMDaemon$InstanceName" -ErrorAction SilentlyContinue;
+        Stop-Service "smptq$InstanceName" -ErrorAction SilentlyContinue;
+        Stop-Service "smpWCF$InstanceName" -ErrorAction SilentlyContinue;
+        Stop-Service "smpbatch$InstanceName*" -ErrorAction SilentlyContinue;
 
         Write-VstsTaskDebug "Root Folder for Instance $InstanceName is $InstanceRootFolder";
         Write-VstsTaskVerbose "Will update registry folder settings";

@@ -9,6 +9,8 @@
         "Build",
         "Release"
     ],
+    "preview" : true,
+    "$showEnvironmentVariables": true,
     "runsOn": [
         "Agent"
     ],
@@ -16,7 +18,7 @@
     "version": {
         "Major": 0,
         "Minor": 1,
-        "Patch": 8
+        "Patch": 10
     },
     "minimumAgentVersion": "1.103.0",
     "instanceNameFormat": "Create Instance $(InstanceName)",
