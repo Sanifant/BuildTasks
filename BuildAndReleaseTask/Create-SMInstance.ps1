@@ -58,7 +58,7 @@ Function Update-Registry
 
     if(test-Path $InstanceFolder)
     {
-        Remove-Item -Path $InstanceFolder -Force -Recurse
+        Remove-Item -Path $InstanceFolder -Force -Recurse -ErrorAction SilentlyContinue
     }
 
     if($DistributeFiles){
@@ -101,7 +101,7 @@ try{
    $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
    Write-VstsTaskDebug "Root Folder for Version $SMVersion is $VersionRootFolder"
 
-   Stop-Process -Name "SampleManager"
+   Stop-Process -Name "SampleManager" -ErrorAction SilentlyContinue
 
    if(Test-Path -Path (Join-Path $InstanceRootKey $InstanceName))
    {
@@ -125,7 +125,7 @@ try{
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$code' 'Code'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$criteria' 'Criteria'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$datafiles' 'Data'
-        Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$forms' 'Forms' -DistributeFiles
+        Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$forms' 'Form' -DistributeFiles
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$graphstyles' 'Graphstyles'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$imprint' 'Imprint'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$labels' 'Labels'
@@ -140,7 +140,7 @@ try{
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$userfiles' 'Userfiles'
 
         Write-VstsTaskVerbose "Distribute Exe Files"
-        Remove-Item -Path $InstanceExeFolder -Force -Recurse
+        Remove-Item -Path $InstanceExeFolder -Force -Recurse -ErrorAction SilentlyContinue
         Copy-Item -Path (Join-Path $VersionRootFolder "Exe" ) -Destination $InstanceRootFolder -Recurse -Force
 
         Write-VstsTaskVerbose "Distribute Report Files"
@@ -167,7 +167,7 @@ try{
         {
             Write-VstsTaskVerbose "Compiling Report $report"
             $smp = Join-Path $InstanceExeFolder 'compiler.exe';
-            #$result = .$smp -instance $InstanceName $report;
+            $result = .$smp -instance $InstanceName $report;
             if($LASTEXITCODE -eq 1)
             {
                 Write-VstsTaskError "Report $report was not compiled successfully"
@@ -176,7 +176,7 @@ try{
 
         Write-VstsTaskVerbose "Importing table data"
         $smp = Join-Path $InstanceExeFolder 'smp.exe';
-        #$result = .$smp -instance $InstanceName -batch -install
+        $result = .$smp -instance $InstanceName -batch -install
         if($LASTEXITCODE -eq 1)
         {
             Write-VstsTaskError "CSV $csv was not imported successfully"

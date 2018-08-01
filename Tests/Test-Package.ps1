@@ -1,5 +1,5 @@
-Import-Module ..\ps_modules\VstsTaskSdk
+Import-Module .\ps_modules\VstsTaskSdk
 # Task variable 'Build.SourcesDirectory':
 $env:BUILD_SOURCESDIRECTORY = "D:\Temp"
 
-Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create('..\BuildAndReleaseTask\Create-SMInstance.ps1')) -Verbose
+Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create('.\BuildAndReleaseTask\Create-SMInstance.ps1')) -Verbose
