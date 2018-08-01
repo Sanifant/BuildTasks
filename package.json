@@ -1,5 +1,5 @@
 {
-  "name": "samplemanager_buildtask",
+  "name": "samplemanager.buildtask",
   "version": "0.9.0",
   "description": "",
   "main": "index.js",
@@ -22,6 +22,7 @@
   "author": "Stefan Petersen",
   "license": "MIT",
   "dependencies": {
+    "npm": "^6.2.0",
     "vss-web-extension-sdk": "^5.134.0"
   }
 }
