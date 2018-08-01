@@ -1,3 +1,6 @@
+[CmdletBinding()]
+param()
+
 Trace-VstsEnteringInvocation $MyInvocation
 Import-VstsLocStrings "$PSScriptRoot\Task.json"
 
@@ -101,7 +104,7 @@ try{
    $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
    Write-VstsTaskDebug "Root Folder for Version $SMVersion is $VersionRootFolder"
 
-   Stop-Process -Name "SampleManager"
+   Stop-Process -Name "SampleManager" -ErrorAction SilentlyContinue
 
    if(Test-Path -Path (Join-Path $InstanceRootKey $InstanceName))
    {
@@ -125,7 +128,7 @@ try{
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$code' 'Code'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$criteria' 'Criteria'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$datafiles' 'Data'
-        Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$forms' 'Forms' -DistributeFiles
+        Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$forms' 'Form' -DistributeFiles
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$graphstyles' 'Graphstyles'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$imprint' 'Imprint'
         Update-Registry $InstanceRootKey $VersionRootFolder $InstanceRootFolder 'smp$labels' 'Labels'

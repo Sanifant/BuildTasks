@@ -7,9 +7,20 @@
     "build": "tfx extension create --manifest-globs vss-extension.json --rev-version",
     "test":  "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command Tests\\Test-Package.ps1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sanifant/BuildTasks"
+  },
+  "keywords": [
+    "VSTS",
+    "build",
+    "tasks"
+  ],
+  "bugs": {
+    "url": "https://github.com/Sanifant/BuildTasks/issues"
+  },
+  "author": "Stefan Petersen",
+  "license": "MIT",
   "dependencies": {
     "vss-web-extension-sdk": "^5.134.0"
   }
