@@ -1,0 +1,48 @@
+{
+    "id": "C90559D8-C162-4E3F-840D-62C8BF237480",
+    "name": "DeleteSMInstance",
+    "friendlyName": "Delete SampleManager Instance",
+    "description": "Deletes a SampleManager Instance",
+    "helpMarkDown": "",
+    "category": "Build",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "preview" : true,
+    "$showEnvironmentVariables": true,
+    "runsOn": [
+        "Agent"
+    ],
+    "author": "Stefan Petersen",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "minimumAgentVersion": "1.103.0",
+    "instanceNameFormat": "Delete Instance $(InstanceName)",
+    "inputs": [
+        {
+            "name": "InstanceName",
+            "type": "string",
+            "label": "SampleManager Instance Name",
+            "defaultValue": "VGSM",
+            "required": true,
+            "helpMarkDown": "Specify the name of the new Instance"
+        },
+        {
+            "name": "DropData",
+            "type": "boolean",
+            "label": "Drop Data",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Set to true when tha data should be dropped."
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+            "target": "Create-SMInstance.ps1"
+        }
+    }
+}

@@ -1,39 +1,63 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
+    "version": "0.0.23",
     "name": "SampleManager Build Tasks",
-    "version": "0.0.17",
     "publisher": "stefanpetersen",
+    "description": "Tools for building/deleting SampleManager Instances.",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
-    ],    
-    "description": "Tools for building/releasing SampleManager Instances.",
-    "categories": [
-        "Build and release"
-    ],
-    "galleryFlags" : [
-        "Public"
     ],
     "icons": {
         "default": "images/SampleManager.png"        
-    },
-    "files": [
-        {
-            "path": "BuildAndReleaseTask"
-        }
+    },    
+    "categories": [
+        "Build and release"
     ],
+    "scopes": [
+        "vso.work",
+        "vso.code_write",
+        "vso.build_execute"
+    ],
+    "content": {
+        "details": {
+            "path": "readme.md"
+        }
+    },
     "contributions": [
         {
-            "id": "custom-build-release-task",
+            "id": "sm-build-instance-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "buildAndReleaseTask"
+                "name": "Create-Instance-Task"
             }
+        },
+        {
+            "id": "sm-delete-instance-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Delete-Instance-Task"
+            }
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/Sanifant/BuildTasks"
+    },
+    "files": [
+        {
+            "path": "Create-Instance-Task"
+        },
+        {
+            "path": "Delete-Instance-Task"
         }
     ]
 }
