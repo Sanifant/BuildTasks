@@ -1,6 +1,6 @@
 https://docs.microsoft.com/en-us/vsts/extend/develop/add-build-task?view=vsts
 
-# tfx extension create --manifest-globs vss-extension.json
+# tfx extension create --manifest-globs vss-extension.json --rev-version
 # tfx extension publish --manifest-globs vss-extension.json --share-with youraccount
 
 sample:

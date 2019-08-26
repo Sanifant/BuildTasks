@@ -42,7 +42,7 @@
     ],
     "execution": {
         "PowerShell3": {
-            "target": "Create-SMInstance.ps1"
+            "target": "Delete-SMInstance.ps1"
         }
     }
 }
