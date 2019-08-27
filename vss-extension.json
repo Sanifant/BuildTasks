@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
-    "version": "0.0.24",
+    "version": "0.0.28",
     "name": "SampleManager Build Tasks",
     "publisher": "stefanpetersen",
     "description": "Tools for building/deleting SampleManager Instances.",

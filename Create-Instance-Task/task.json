@@ -3,7 +3,7 @@
     "name": "BuildSMInstance",
     "friendlyName": "Build SampleManager Instance",
     "description": "Create a new SampleManager Instance",
-    "helpMarkDown": "",
+    "helpMarkDown": "Use this task to create a new SampleManager instance for building and testing your Module",
     "category": "Build",
     "visibility": [
         "Build",
@@ -17,8 +17,8 @@
     "author": "Stefan Petersen",
     "version": {
         "Major": 0,
-        "Minor": 1,
-        "Patch": 11
+        "Minor": 2,
+        "Patch": 0
     },
     "minimumAgentVersion": "1.103.0",
     "instanceNameFormat": "Create Instance $(InstanceName)",
@@ -62,10 +62,19 @@
             "helpMarkDown": "Enter the name of the database used. Ensure that the database already exists on the Server."
         },
         {
+            "name": "TrustedConnection",
+            "type": "boolean",
+            "label": "Use trusted connection",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enable to set Username and passord to log on to database"
+        },
+        {
             "name": "DataBaseUser",
             "type": "string",
             "label": "Database User",
             "required": false,
+            "visibleRule": "trustedConnection == true",
             "helpMarkDown": "Enter the user to access the database."
         },
         {
@@ -73,6 +82,7 @@
             "type": "string",
             "label": "Database Password",
             "required": false,
+            "visibleRule": "trustedConnection == true",
             "helpMarkDown": "Enter the password to access the database."
         },
         {

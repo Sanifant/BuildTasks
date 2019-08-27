@@ -2,7 +2,7 @@
 param()
 
 Trace-VstsEnteringInvocation $MyInvocation
-Import-VstsLocStrings "$PSScriptRoot\Task.json"
+Import-VstsLocStrings "$PSScriptRoot\task.json"
 
 $RootKey = 'HKLM:SOFTWARE\Wow6432Node\LabSystems\';
 $VersionRootKey = Join-Path $RootKey "SampleManager";
@@ -11,7 +11,6 @@ $InstanceRootKey = Join-Path $RootKey "SampleManager Server";
 try{
     $InstanceName     = Get-VstsInput -Name InstanceName -Require
     $SMVersion        = Get-VstsInput -Name SMVersion -Require
-    $DataBaseServer   = Get-VstsInput -Name DataBaseServer -Require
     $DropData         = Get-VstsInput -Name DropData -Require
 
     Write-VstsTaskDebug $InstanceName;

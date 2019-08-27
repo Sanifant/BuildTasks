@@ -2,11 +2,15 @@
 param()
 
 Trace-VstsEnteringInvocation $MyInvocation
-Import-VstsLocStrings "$PSScriptRoot\Task.json"
+Import-VstsLocStrings "$PSScriptRoot\task.json"
 
 $RootKey = 'HKLM:SOFTWARE\Wow6432Node\LabSystems\';
 $VersionRootKey = Join-Path $RootKey "SampleManager";
-$InstanceRootKey = Join-Path $RootKey "SampleManager Server";
+$AdoConnectionString = "INVALID";
+
+# Template Connectionstrings
+# Provider=SQLNCLI11;Server=SM-BUILD-SQL;Database=VGSM;User Id=VGSM;Password=VGSM;MARS Connection=true;
+# Provider=SQLNCLI11;Server=SM-BUILD-SQL;Database=VGSM;Trusted_Connection=yes;MARS Connection=true;
 
 try{
     $InstanceName     = Get-VstsInput -Name InstanceName -Require
@@ -16,24 +20,28 @@ try{
     $DataBaseUser     = Get-VstsInput -Name DataBaseUser
     $DataBasePassword = Get-VstsInput -Name DataBasePassword
     $LicenseServer    = Get-VstsInput -Name LicenseServer
+    $TrustedConnection = Get-VstsInout -Name TrustedConnection
 
-   Write-VstsTaskDebug $InstanceName;
-   Write-VstsTaskDebug $VersionRootKey;
-   Write-VstsTaskDebug $InstanceRootKey;
-   Write-VstsTaskDebug $DataBaseServer;
-   Write-VstsTaskDebug $DataBase;
-   Write-VstsTaskDebug $DataBaseUser;
-   Write-VstsTaskDebug $DataBasePassword;
-   Write-VstsTaskDebug $LicenseServer;
+    $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
+    $VersionExeFolder = Join-Path $VersionRootFolder "EXE"
 
-
-   $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
-   Write-VstsTaskDebug "Root Folder for Version $SMVersion is $VersionRootFolder"
-   $VersionExeFolder = Join-Path $VersionRootFolder "EXE"
-   Write-VstsTaskDebug "Exe Folder for Version $SMVersion is $VersionExeFolder"
+    Write-VstsTaskDebug "Instancename: $InstanceName";
+    Write-VstsTaskDebug "SampleManager Version: $SMVersion";
+    Write-VstsTaskDebug "Root Folder for Version $SMVersion is $VersionRootFolder"
+    Write-VstsTaskDebug "Exe Folder for Version $SMVersion is $VersionExeFolder"
+    Write-VstsTaskDebug "Database Server: $DataBaseServer";
+    Write-VstsTaskDebug "Database: $DataBase";
+    if ($TrustedConnection) {
+        $AdoConnectionString = "Provider=SQLNCLI11;Server=$DataBaseServer;Database=$DataBase;Trusted_Connection=yes;MARS Connection=true;"
+    }
+    else {
+        $AdoConnectionString = "Provider=SQLNCLI11;Server=$DataBaseServer;Database=$DataBase;User Id=$DataBaseUser;Password=$DataBasePassword;MARS Connection=true"
+    }
+    Write-VstsTaskDebug "Using connectionstring: $AdoConnectionString";
+    Write-VstsTaskDebug "Using Licenseserver: $LicenseServer";
 
     $builder = Join-Path $VersionExeFolder 'BuildInstance.exe';
-    $result = .$builder -n $InstanceName -ls $LicenseServer -sqlserver $DataBaseServer -database $DataBase -databaseuser $DataBaseUser -databasepass $DataBasePassword
+    $result = .$builder -n $InstanceName -dbs $DataBaseServer -db $DataBase -ls $LicenseServer -ado $AdoConnectionString
 
     if($LASTEXITCODE -eq 1)
     {
