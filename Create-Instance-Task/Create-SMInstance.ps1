@@ -20,7 +20,7 @@ try{
     $DataBaseUser     = Get-VstsInput -Name DataBaseUser
     $DataBasePassword = Get-VstsInput -Name DataBasePassword
     $LicenseServer    = Get-VstsInput -Name LicenseServer
-    $TrustedConnection = Get-VstsInout -Name TrustedConnection
+    $TrustedConnection = Get-VstsInput -Name TrustedConnection
 
     $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
     $VersionExeFolder = Join-Path $VersionRootFolder "EXE"
