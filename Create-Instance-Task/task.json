@@ -9,15 +9,15 @@
         "Build",
         "Release"
     ],
-    "preview" : true,
+    "preview" : false,
     "$showEnvironmentVariables": true,
     "runsOn": [
         "Agent"
     ],
     "author": "Stefan Petersen",
     "version": {
-        "Major": 0,
-        "Minor": 2,
+        "Major": 1,
+        "Minor": 0,
         "Patch": 0
     },
     "minimumAgentVersion": "1.103.0",
@@ -74,7 +74,7 @@
             "type": "string",
             "label": "Database User",
             "required": false,
-            "visibleRule": "trustedConnection == true",
+            "visibleRule": "TrustedConnection == false",
             "helpMarkDown": "Enter the user to access the database."
         },
         {
@@ -82,7 +82,7 @@
             "type": "string",
             "label": "Database Password",
             "required": false,
-            "visibleRule": "trustedConnection == true",
+            "visibleRule": "TrustedConnection == false",
             "helpMarkDown": "Enter the password to access the database."
         },
         {

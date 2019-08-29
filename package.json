@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tfx extension create --manifest-globs vss-extension.json --rev-version",
-    "test":  "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command Tests\\Test-Package.ps1"
+    "build":    "tfx extension create --manifest-globs vss-extension.json --rev-version",
+    "test":     "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command Tests\\Test-Package.ps1",
+    "release":  "tfx extension publish --manifest-globs vss-extension.json"
   },
   "repository": {
     "type": "git",

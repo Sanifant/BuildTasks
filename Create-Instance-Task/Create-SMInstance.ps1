@@ -13,14 +13,14 @@ $AdoConnectionString = "INVALID";
 # Provider=SQLNCLI11;Server=SM-BUILD-SQL;Database=VGSM;Trusted_Connection=yes;MARS Connection=true;
 
 try{
-    $InstanceName     = Get-VstsInput -Name InstanceName -Require
-    $SMVersion        = Get-VstsInput -Name SMVersion -Require
-    $DataBaseServer   = Get-VstsInput -Name DataBaseServer -Require
-    $DataBase         = Get-VstsInput -Name DataBase -Require
-    $DataBaseUser     = Get-VstsInput -Name DataBaseUser
-    $DataBasePassword = Get-VstsInput -Name DataBasePassword
-    $LicenseServer    = Get-VstsInput -Name LicenseServer
-    $TrustedConnection = Get-VstsInput -Name TrustedConnection
+    [string]$InstanceName     = Get-VstsInput -Name InstanceName -Require
+    [String]$SMVersion        = Get-VstsInput -Name SMVersion -Require
+    [String]$DataBaseServer   = Get-VstsInput -Name DataBaseServer -Require
+    [String]$DataBase         = Get-VstsInput -Name DataBase -Require
+    [String]$DataBaseUser     = Get-VstsInput -Name DataBaseUser
+    [String]$DataBasePassword = Get-VstsInput -Name DataBasePassword
+    [String]$LicenseServer    = Get-VstsInput -Name LicenseServer
+    [boolean]$TrustedConnection = Get-VstsInput -Name TrustedConnection -AsBool
 
     $VersionRootFolder = (Get-ItemProperty -Path (Join-Path $VersionRootKey $SMVersion)).RootFolder
     $VersionExeFolder = Join-Path $VersionRootFolder "EXE"
@@ -41,7 +41,17 @@ try{
     Write-VstsTaskDebug "Using Licenseserver: $LicenseServer";
 
     $builder = Join-Path $VersionExeFolder 'BuildInstance.exe';
-    $result = .$builder -n $InstanceName -dbs $DataBaseServer -db $DataBase -ls $LicenseServer -ado $AdoConnectionString
+    $cmdArgList = @(
+        "-n", "$InstanceName",
+        "-dbs", "$DataBaseServer",
+        "-db", "$DataBase"
+        "-ls", "$LicenseServer"
+        "-ado", "$AdoConnectionString"
+    )
+
+    Write-VstsTaskDebug "Executing $builder";
+    $result = & $builder $cmdArgList;
+    Write-VstsTaskDebug "\t$result";
 
     if($LASTEXITCODE -eq 1)
     {

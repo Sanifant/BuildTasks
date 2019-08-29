@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
-    "version": "0.0.29",
+    "version": "1.0.1",
     "name": "SampleManager Build Tasks",
     "publisher": "stefanpetersen",
     "description": "Tools for building/deleting SampleManager Instances.",
@@ -17,8 +17,6 @@
         "Build and release"
     ],
     "scopes": [
-        "vso.work",
-        "vso.code_write",
         "vso.build_execute"
     ],
     "content": {

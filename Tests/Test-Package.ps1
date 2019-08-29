@@ -1,4 +1,4 @@
-# Import-Module ..\BuildAndReleaseTask\ps_modules\VstsTaskSdk
+Import-Module ..\BuildAndReleaseTask\ps_modules\VstsTaskSdk
 # Task variable 'Build.SourcesDirectory':
 $env:BUILD_SOURCESDIRECTORY = "D:\Temp"
 
