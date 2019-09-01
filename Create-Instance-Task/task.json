@@ -18,7 +18,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 0
+        "Patch": 1
     },
     "minimumAgentVersion": "1.103.0",
     "instanceNameFormat": "Create Instance $(InstanceName)",
@@ -40,11 +40,16 @@
         },
         {
             "name": "SMVersion",
-            "type": "string",
+            "type": "picklist",
             "label": "SampleManager Version",
             "defaultValue": "12.1.2",
             "required": true,
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1"
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "options": {
+                "12.1.1": "12.1 SP1",
+                "12.1.2": "12.1 SP2",
+                "12.2": "12.2"
+            }
         },
         {
             "name": "DataBaseServer",

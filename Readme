@@ -1,7 +1,0 @@
-https://docs.microsoft.com/en-us/vsts/extend/develop/add-build-task?view=vsts
-
-# tfx extension create --manifest-globs vss-extension.json --rev-version
-# tfx extension publish --manifest-globs vss-extension.json --share-with youraccount
-
-sample:
-https://github.com/Microsoft/vsts-tasks/tree/master/Tasks/AzureCloudPowerShellDeploymentV1github.com/Microsoft/vsts-tasks/tree/master/Tasks/AzureCloudPowerShellDeploymentV1
