@@ -56,7 +56,7 @@
             "type": "string",
             "label": "Database Server",
             "required": true,
-            "helpMarkDown": "Enter the Name and the instance og the Database Server"
+            "helpMarkDown": "Enter the Name and the instance of the Database Server"
         },
         {
             "name": "DataBase",
