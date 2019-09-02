@@ -40,11 +40,16 @@
         },
         {
             "name": "SMVersion",
-            "type": "string",
+            "type": "picklist",
             "label": "SampleManager Version",
             "defaultValue": "12.1.2",
             "required": true,
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1"
+            "helpMarkDown": "Select the Version of SampleManager to be used.",
+            "options": {
+                "12.1.1": "12.1 SP1",
+                "12.1.2": "12.1 SP2",
+                "12.2.0": "12.2"
+            }
         },
         {
             "name": "DataBaseServer",

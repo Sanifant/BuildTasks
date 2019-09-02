@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build":    "tfx extension create --manifest-globs vss-extension.json --rev-version",
-    "test":     "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command Tests\\Test-Package.ps1",
-    "release":  "tfx extension publish --manifest-globs vss-extension.json"
+    "build": "tfx extension create --manifest-globs vss-extension.json --rev-version",
+    "test": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command Tests\\Test-Package.ps1",
+    "release": "tfx extension publish --manifest-globs vss-extension.json"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   "author": "Stefan Petersen",
   "license": "MIT",
   "dependencies": {
-    "npm": "^6.2.0",
-    "vss-web-extension-sdk": "^5.134.0"
+    "npm": "^6.11.2",
+    "vss-web-extension-sdk": "^5.141.0"
   }
 }

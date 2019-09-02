@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "name": "SampleManager Build Tasks",
     "publisher": "stefanpetersen",
     "description": "Tools for building/deleting SampleManager Instances.",
@@ -14,10 +14,11 @@
         "default": "images/SampleManager.png"        
     },    
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "scopes": [
-        "vso.build_execute"
+        "vso.build_execute",
+        "vso.release_execute"
     ],
     "content": {
         "details": {

@@ -4,8 +4,5 @@
 			"path": "."
 		}
 	],
-	"files.exclude" :  {
-		"**/*.vsix" : true
-	},
 	"settings": {}
 }
