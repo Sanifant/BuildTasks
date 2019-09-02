@@ -84,6 +84,7 @@ try{
         else {
             Write-VstsTaskError "SampleManager not installed"
         }
+    }
     else {
         Write-VstsTaskError "Version $SMVersion is not valid"
     }
