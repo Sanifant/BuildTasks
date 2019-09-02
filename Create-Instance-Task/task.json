@@ -67,6 +67,26 @@
             "helpMarkDown": "Enter the name of the database used. Ensure that the database already exists on the Server."
         },
         {
+            "name": "DBCreate",
+            "type": "boolean",
+            "label": "Create new Database",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enable to create a new Database"
+        },
+        {
+            "name": "DBCollation",
+            "type": "picklist",
+            "label": "SampleManager Version",
+            "defaultValue": "12.1.2",
+            "required": true,
+            "helpMarkDown": "Select the Version of SampleManager to be used.",
+            "options": {
+                "Latin1_General_CI_AS_WS" : "Latin 1 Case Insensitive",
+                "Latin1_General_CS_AS_WS" : "Latin 1 Case Sensitive"
+            }
+        },
+        {
             "name": "TrustedConnection",
             "type": "boolean",
             "label": "Use trusted connection",
