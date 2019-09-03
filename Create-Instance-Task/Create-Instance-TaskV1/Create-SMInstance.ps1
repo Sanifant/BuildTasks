@@ -17,6 +17,8 @@ try{
     [String]$SMVersion        = Get-VstsInput -Name SMVersion -Require
     [String]$DataBaseServer   = Get-VstsInput -Name DataBaseServer -Require
     [String]$DataBase         = Get-VstsInput -Name DataBase -Require
+    [boolean]$CreateDB = Get-VstsInput -Name DBCreate -AsBool
+    [String]$DBCollation    = Get-VstsInput -Name DBCollation
     [String]$DataBaseUser     = Get-VstsInput -Name DataBaseUser
     [String]$DataBasePassword = Get-VstsInput -Name DataBasePassword
     [String]$LicenseServer    = Get-VstsInput -Name LicenseServer
@@ -55,6 +57,9 @@ try{
             Write-VstsTaskDebug "Database Server: $DataBaseServer";
             Write-VstsTaskDebug "Database: $DataBase";
             if ($TrustedConnection) {
+                Write-VstsTaskDebug "Creating Database with COllation $DBCollation"
+            }
+            if ($TrustedConnection) {
                 $AdoConnectionString = "Provider=SQLNCLI11;Server=$DataBaseServer;Database=$DataBase;Trusted_Connection=yes;MARS Connection=true;"
             }
             else {
@@ -62,6 +67,37 @@ try{
             }
             Write-VstsTaskDebug "Using connectionstring: $AdoConnectionString";
             Write-VstsTaskDebug "Using Licenseserver: $LicenseServer";
+
+            If($CreateDB) {
+                $CreateUser = "CREATE LOGIN [$DataBaseUser] WITH PASSWORD=N'$DataBasePassword', DEFAULT_DATABASE=[$DataBase], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;"
+                $CreateDBUser = "CREATE USER [$DataBaseUser] FOR LOGIN [$DataBaseUser];"
+                $RoleDataReader = "ALTER ROLE [db_datareader] ADD MEMBER [$DataBaseUser];"
+                $RoleDataWriter = "ALTER ROLE [db_datawriter] ADD MEMBER [$DataBaseUser];"
+                $RoleDDLAdmin = "ALTER ROLE [db_ddladmin] ADD MEMBER [$DataBaseUser];"
+                $InstanceDB = "CREATE DATABASE $DataBase  COLLATE $DBCollation"
+                
+                $oConn = New-Object System.Data.OleDb.OleDbConnection $ConnectionString
+                $oCmd  = New-Object System.Data.OleDb.OleDbCommand($InstanceDB, $oConn)
+
+                $oConn.Open()
+
+                If($oConn.State -eq "Open"){
+                    $result = $oCmd.ExecuteNonQuery()
+                    $oCmd.CommandText = $CreateUser
+                    $result = $oCmd.ExecuteNonQuery()
+                    $oCmd.CommandText = $CreateDBUser
+                    $result = $oCmd.ExecuteNonQuery()
+                    $oCmd.CommandText = $RoleDataReader
+                    $result = $oCmd.ExecuteNonQuery()
+                    $oCmd.CommandText = $RoleDataWriter
+                    $result = $oCmd.ExecuteNonQuery()
+                    $oCmd.CommandText = $RoleDDLAdmin
+                    $result = $oCmd.ExecuteNonQuery()
+                }
+
+                $oConn.Close()
+            }
+
 
             $builder = Join-Path $VersionExeFolder 'BuildInstance.exe';
             $cmdArgList = @(
