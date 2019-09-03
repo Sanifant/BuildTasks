@@ -1,0 +1,144 @@
+{
+    "id": "C90559D8-C162-4E3F-840D-62C8BF23747F",
+    "name": "BuildSMInstance",
+    "friendlyName": "Build SampleManager Instance",
+    "description": "Create a new SampleManager Instance",
+    "helpMarkDown": "Use this task to create a new SampleManager instance for building and testing your Module",
+    "category": "Build",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "preview" : true,
+    "$showEnvironmentVariables": true,
+    "runsOn": [
+        "Agent"
+    ],
+    "author": "Stefan Petersen",
+    "version": {
+        "Major": 2,
+        "Minor": 0,
+        "Patch": 0
+    },
+    "minimumAgentVersion": "1.103.0",
+    "instanceNameFormat": "Create Instance $(InstanceName)",
+    "groups": [
+        {
+            "name": "smModules",
+            "displayName": "Module Selection",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "InstanceName",
+            "type": "string",
+            "label": "SampleManager Instance Name",
+            "defaultValue": "VGSM",
+            "required": true,
+            "helpMarkDown": "Specify the name of the new Instance"
+        },
+        {
+            "name": "SMVersion",
+            "type": "picklist",
+            "label": "SampleManager Version",
+            "defaultValue": "12.1.2",
+            "required": true,
+            "helpMarkDown": "Select the Version of SampleManager to be used.",
+            "options": {
+                "12.1.1": "12.1 SP1",
+                "12.1.2": "12.1 SP2",
+                "12.2.0": "12.2"
+            }
+        },
+        {
+            "name": "DataBaseServer",
+            "type": "string",
+            "label": "Database Server",
+            "required": true,
+            "helpMarkDown": "Enter the Name and the instance of the Database Server"
+        },
+        {
+            "name": "DataBase",
+            "type": "string",
+            "label": "Database Name",
+            "defaultValue": "VGSM",
+            "required": true,
+            "helpMarkDown": "Enter the name of the database used. Ensure that the database already exists on the Server."
+        },
+        {
+            "name": "TrustedConnection",
+            "type": "boolean",
+            "label": "Use trusted connection",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enable to set Username and passord to log on to database"
+        },
+        {
+            "name": "DataBaseUser",
+            "type": "string",
+            "label": "Database User",
+            "required": false,
+            "visibleRule": "TrustedConnection == false",
+            "helpMarkDown": "Enter the user to access the database."
+        },
+        {
+            "name": "DataBasePassword",
+            "type": "string",
+            "label": "Database Password",
+            "required": false,
+            "visibleRule": "TrustedConnection == false",
+            "helpMarkDown": "Enter the password to access the database."
+        },
+        {
+            "name": "LicenseServer",
+            "type": "string",
+            "label": "License Server",
+            "required": false,
+            "helpMarkDown": "Enter thename of the licenseserver"
+        },
+        {
+            "name": "SQC",
+            "type": "boolean",
+            "label": "Install SQC Module",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "smModules"
+        },
+        {
+            "name": "SQCFolder",
+            "type": "string",
+            "label": "SQC Module Folder",
+            "defaultValue": "false",
+            "required": false,
+            "visibleRule": "SQC == true",
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "smModules"
+        },
+        {
+            "name": "Stability",
+            "type": "boolean",
+            "label": "Install Stability Module",
+            "defaultValue": "false",
+            "required": false,
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "smModules"
+        },
+        {
+            "name": "StabilityFolder",
+            "type": "string",
+            "label": "Stability Module Folder",
+            "defaultValue": "false",
+            "required": false,
+            "visibleRule": "Stability == true",
+            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
+            "groupName" : "smModules"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "CreateInstance.js"
+        }
+    }
+}
