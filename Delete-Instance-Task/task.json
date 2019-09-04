@@ -38,6 +38,14 @@
             "defaultValue": "true",
             "required": true,
             "helpMarkDown": "Set to true when tha data should be dropped."
+        },
+        {
+            "name": "DropDataBase",
+            "type": "boolean",
+            "label": "Drop Database",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Set to true when tha database should be dropped."
         }
     ],
     "execution": {

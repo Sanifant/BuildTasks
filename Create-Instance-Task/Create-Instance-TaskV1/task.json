@@ -4,11 +4,7 @@
     "friendlyName": "Build SampleManager Instance",
     "description": "Create a new SampleManager Instance",
     "helpMarkDown": "Use this task to create a new SampleManager instance for building and testing your Module",
-    "category": "Build",
-    "visibility": [
-        "Build",
-        "Release"
-    ],
+    "category": "Azure Pipelines",
     "preview" : false,
     "$showEnvironmentVariables": true,
     "runsOn": [
@@ -22,13 +18,6 @@
     },
     "minimumAgentVersion": "1.103.0",
     "instanceNameFormat": "Create Instance $(InstanceName)",
-    "groups": [
-        {
-            "name": "smModules",
-            "displayName": "Module Selection",
-            "isExpanded": false
-        }
-    ],
     "inputs": [
         {
             "name": "InstanceName",
@@ -77,9 +66,9 @@
         {
             "name": "DBCollation",
             "type": "picklist",
-            "label": "SampleManager Version",
-            "defaultValue": "12.1.2",
-            "required": true,
+            "label": "Database Collation",
+            "required": "DBCreate == true",
+            "visibleRule": "DBCreate == true",
             "helpMarkDown": "Select the Version of SampleManager to be used.",
             "options": {
                 "Latin1_General_CI_AS_WS" : "Latin 1 Case Insensitive",
@@ -116,44 +105,6 @@
             "label": "License Server",
             "required": false,
             "helpMarkDown": "Enter thename of the licenseserver"
-        },
-        {
-            "name": "SQC",
-            "type": "boolean",
-            "label": "Install SQC Module",
-            "defaultValue": "false",
-            "required": false,
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
-            "groupName" : "smModules"
-        },
-        {
-            "name": "SQCFolder",
-            "type": "string",
-            "label": "SQC Module Folder",
-            "defaultValue": "false",
-            "required": false,
-            "visibleRule": "SQC == true",
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
-            "groupName" : "smModules"
-        },
-        {
-            "name": "Stability",
-            "type": "boolean",
-            "label": "Install Stability Module",
-            "defaultValue": "false",
-            "required": false,
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
-            "groupName" : "smModules"
-        },
-        {
-            "name": "StabilityFolder",
-            "type": "string",
-            "label": "Stability Module Folder",
-            "defaultValue": "false",
-            "required": false,
-            "visibleRule": "Stability == true",
-            "helpMarkDown": "Enter the Version of SampleManager to be used. Like 12.1.1",
-            "groupName" : "smModules"
         }
     ],
     "execution": {

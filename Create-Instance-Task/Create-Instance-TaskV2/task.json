@@ -4,15 +4,12 @@
     "friendlyName": "Build SampleManager Instance",
     "description": "Create a new SampleManager Instance",
     "helpMarkDown": "Use this task to create a new SampleManager instance for building and testing your Module",
-    "category": "Build",
-    "visibility": [
-        "Build",
-        "Release"
-    ],
+    "category": "Azure Pipelines",
     "preview" : true,
     "$showEnvironmentVariables": true,
     "runsOn": [
-        "Agent"
+        "Agent",
+        "DeploymentGroup"
     ],
     "author": "Stefan Petersen",
     "version": {
