@@ -18,7 +18,9 @@ try{
     [String]$DataBaseServer   = Get-VstsInput -Name DataBaseServer -Require
     [String]$DataBase         = Get-VstsInput -Name DataBase -Require
     [boolean]$CreateDB = Get-VstsInput -Name DBCreate -AsBool
-    [String]$DBCollation    = Get-VstsInput -Name DBCollation
+    [string]$DataBaseSaUser     = Get-VstsInput -Name DataBaseSaUser
+    [string]$DataBaseSaPassword = Get-VstsInput -Name DataBaseSaPassword
+    [String]$DBCollation      = Get-VstsInput -Name DBCollation
     [String]$DataBaseUser     = Get-VstsInput -Name DataBaseUser
     [String]$DataBasePassword = Get-VstsInput -Name DataBasePassword
     [String]$LicenseServer    = Get-VstsInput -Name LicenseServer
@@ -69,6 +71,8 @@ try{
             Write-VstsTaskDebug "Using Licenseserver: $LicenseServer";
 
             If($CreateDB) {
+                $ConnectionString = "Provider=SQLNCLI11;Server=$DataBaseServer;Database=master;User Id=$DataBaseSaUser;Password=$DataBaseSaPassword;MARS Connection=true"
+
                 $CreateUser = "CREATE LOGIN [$DataBaseUser] WITH PASSWORD=N'$DataBasePassword', DEFAULT_DATABASE=[$DataBase], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;"
                 $CreateDBUser = "CREATE USER [$DataBaseUser] FOR LOGIN [$DataBaseUser];"
                 $RoleDataReader = "ALTER ROLE [db_datareader] ADD MEMBER [$DataBaseUser];"
@@ -103,8 +107,8 @@ try{
             $cmdArgList = @(
                 "-n", "$InstanceName",
                 "-dbs", "$DataBaseServer",
-                "-db", "$DataBase"
-                "-ls", "$LicenseServer"
+                "-db", "$DataBase",
+                "-ls", "$LicenseServer",
                 "-ado", "$AdoConnectionString"
             )
 

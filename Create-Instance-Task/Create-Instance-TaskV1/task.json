@@ -64,6 +64,22 @@
             "helpMarkDown": "Enable to create a new Database"
         },
         {
+            "name": "DataBaseSaUser",
+            "type": "string",
+            "label": "SA User",
+            "required": false,
+            "visibleRule": "DBCreate == true",
+            "helpMarkDown": "Enter the user to access the database."
+        },
+        {
+            "name": "DataBaseSaPassword",
+            "type": "string",
+            "label": "SA Password",
+            "required": false,
+            "visibleRule": "DBCreate == true",
+            "helpMarkDown": "Enter the password to access the database."
+        },
+        {
             "name": "DBCollation",
             "type": "picklist",
             "label": "Database Collation",
