@@ -67,7 +67,7 @@
             "name": "DBCollation",
             "type": "picklist",
             "label": "Database Collation",
-            "required": "DBCreate == true",
+            "required": false,
             "visibleRule": "DBCreate == true",
             "helpMarkDown": "Select the Version of SampleManager to be used.",
             "options": {
