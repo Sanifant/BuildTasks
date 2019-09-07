@@ -24,6 +24,7 @@
   "author": "Stefan Petersen",
   "license": "MIT",
   "dependencies": {
+    "mocha": "^6.2.0",
     "npm": "^6.11.2"
   },
   "devDependencies": {
