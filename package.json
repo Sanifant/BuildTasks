@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "buildPackage": "tfx extension create --manifest-globs vss-extension.json --rev-version",
-    "build": "node make.js build",
-    "test": "node make.js test",
+    "building": "node make.js build",
+    "testing": "node make.js test",
     "release": "tfx extension publish --manifest-globs vss-extension.json"
   },
   "repository": {
