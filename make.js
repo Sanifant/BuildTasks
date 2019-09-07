@@ -15,7 +15,7 @@ var mkdir      = util.mkdir;
 //var fail = util.fail;
 
 target.build = function() {
-
+    console.debug('@@@ Building make.js @@@')
     ensureTool('tsc', '--version', 'Version 3.6.2');
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, '5.6.0')) {
@@ -35,6 +35,7 @@ target.build = function() {
 }
 
 target.test = function() {
+    console.debug('@@@ Tesing make.js @@@')
     ensureTool('tsc', '--version', 'Version 3.6.2');
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, '5.6.0')) {

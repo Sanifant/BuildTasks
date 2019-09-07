@@ -1,4 +1,4 @@
-<testsuite name="Mocha Tests" tests="2" failures="0" errors="0" skipped="0" timestamp="Sat, 07 Sep 2019 18:10:08 GMT" time="0.556">
-<testcase classname="Sample task tests" name="should use Version 12.2" time="0.264"/>
-<testcase classname="Sample task tests" name="it should fail when wrong version supplied" time="0.286"/>
+<testsuite name="Mocha Tests" tests="2" failures="0" errors="0" skipped="0" timestamp="Sat, 07 Sep 2019 19:34:43 GMT" time="1.057">
+<testcase classname="Sample task tests" name="should use Version 12.2" time="0.64"/>
+<testcase classname="Sample task tests" name="it should fail when wrong version supplied" time="0.408"/>
 </testsuite>
