@@ -16,7 +16,13 @@ var mkdir      = util.mkdir;
 
 target.build = function() {
     console.debug('@@@ Building make.js @@@')
-    ensureTool('tsc', '--version', 'Version 3.6.2');
+    ensureTool('tsc', '--version', function (output) {
+        var regex = new RegExp('[1-9].[1-9]+.[1-9]+');
+        var version = regex.exec(output)[0];
+        if (semver.lt(version, '2.3.4')) {
+            fail('Expected 2.3.4 or higher. To fix, run: npm install -g npm');
+        }
+    });
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, '5.6.0')) {
             fail('Expected 5.6.0 or higher. To fix, run: npm install -g npm');
@@ -36,7 +42,13 @@ target.build = function() {
 
 target.test = function() {
     console.debug('@@@ Tesing make.js @@@')
-    ensureTool('tsc', '--version', 'Version 3.6.2');
+    ensureTool('tsc', '--version', function (output) {
+        var regex = new RegExp('[1-9].[1-9]+.[1-9]+');
+        var version = regex.exec(output)[0];
+        if (semver.lt(version, '2.3.4')) {
+            fail('Expected 2.3.4 or higher. To fix, run: npm install -g npm');
+        }
+    });
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, '5.6.0')) {
             fail('Expected 5.6.0 or higher. To fix, run: npm install -g npm');
