@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "name": "SampleManager Build Tasks",
     "publisher": "stefanpetersen",
     "description": "Tools for building/deleting SampleManager Instances.",
@@ -53,10 +53,7 @@
     },
     "files": [
         {
-            "path": "Create-Instance-Task"
-        },
-        {
-            "path": "Delete-Instance-Task"
+            "path": "Tasks"
         }
     ]
 }

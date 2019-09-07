@@ -2,7 +2,7 @@
   "name": "create.instance.task",
   "version": "1.0.0",
   "description": "Creat instance Task using NodeJs",
-  "main": "index.js",
+  "main": "_suits.js",
   "scripts": {},
   "repository": {
     "type": "git",
@@ -14,11 +14,11 @@
   "author": "Stefan Petersen",
   "license": "MIT",
   "dependencies": {
-    "azure-pipelines-task-lib": "^2.8.0"
+    "azure-pipelines-task-lib": "2.8.0"
   },
   "devDependencies": {
-    "@types/node": "^12.7.3",
-    "tsc": "1.20150623.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.4",
     "@types/q": "^1.5.2"
   }
 }
