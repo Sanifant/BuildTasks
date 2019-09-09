@@ -7,7 +7,7 @@
     "description": "Tools for building/deleting SampleManager Instances.",
     "targets": [
         {
-            "id": "Microsoft.VisualStudio.Services"
+            "id": "Microsoft.VisualStudio.Services.Integration"
         }
     ],
     "icons": {
