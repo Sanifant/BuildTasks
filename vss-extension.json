@@ -1,13 +1,13 @@
 {
     "manifestVersion": 1,
     "id": "build-release-task",
-    "version": "1.0.5",
+    "version": "1.0.12",
     "name": "SampleManager Build Tasks",
     "publisher": "stefanpetersen",
     "description": "Tools for building/deleting SampleManager Instances.",
     "targets": [
         {
-            "id": "Microsoft.VisualStudio.Services.Integration"
+            "id": "Microsoft.VisualStudio.Services"
         }
     ],
     "icons": {
@@ -27,7 +27,7 @@
     },
     "contributions": [
         {
-            "id": "sm-build-instance-task",
+            "id": "sm-build-instance-taskv1",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
@@ -53,7 +53,10 @@
     },
     "files": [
         {
-            "path": "Tasks"
+            "path": "Create-Instance-Task"
+        },
+        {
+            "path": "Delete-Instance-Task"
         }
     ]
 }
