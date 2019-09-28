@@ -40,8 +40,6 @@ var ensureTool = function (name, versionArgs, validate) {
             validate(result.output.trim());
         }
     }
-
-    console.log(toolPath + '');
 }
 exports.ensureTool = ensureTool;
 

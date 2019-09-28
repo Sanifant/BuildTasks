@@ -15,7 +15,6 @@ var mkdir      = util.mkdir;
 //var fail = util.fail;
 
 target.build = function() {
-    console.debug('@@@ Building make.js @@@')
     ensureTool('tsc', '--version', function (output) {
         var regex = new RegExp('[1-9].[1-9]+.[1-9]+');
         var version = regex.exec(output)[0];
@@ -29,19 +28,21 @@ target.build = function() {
         }
     });
 
-    var folderPath = path.join(__dirname, 'Tasks');
-    fs.readdirSync(folderPath).map(fileName => {
-        var taskPath = path.join(folderPath, fileName);
-        banner(`Building ${fileName}`);
+    ParseModule(__dirname, function(folder) {
+        console.log(folder);
+        GetTaskFolder(folder, function(taskPath){
+            banner(`Building Module ${GetModuleName(taskPath)}`);
 
-        if(checkNode(taskPath)){
-            buildNode(taskPath);
-        }
+            if(checkNode(taskPath)){
+                buildNode(taskPath);
+            } else {
+                console.log(`Module ${GetModuleName(taskPath)} is a Powershell Module`);
+            }
+        })
     })
 }
 
 target.test = function() {
-    console.debug('@@@ Tesing make.js @@@')
     ensureTool('tsc', '--version', function (output) {
         var regex = new RegExp('[1-9].[1-9]+.[1-9]+');
         var version = regex.exec(output)[0];
@@ -60,22 +61,80 @@ target.test = function() {
         }
     });
 
-    target.build();
+    GetTaskFolder(__dirname, function(taskPath){
 
-    var folderPath = path.join(__dirname, 'Tasks');
-    fs.readdirSync(folderPath).map(fileName => {
-        
-        banner(`Testing Module ${fileName}`);
-        var testFilePath = path.join(folderPath, fileName, 'Tests', '_suite.js');
-        var testResultPath = path.join(__dirname, 'TestResults');
-        var resultFileName = path.join(testResultPath, fileName + '_results.xml');
-        mkdir('-p', testResultPath);
-        
-        if(test('-f', testFilePath)){
-            console.log();
-            run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, true);
+        if(checkNode(taskPath)){
+            buildNode(taskPath);
+            banner(`Building Module ${GetModuleName(taskPath)}`);
+            var testFilePath = path.join(taskPath, 'Tests', '_suite.js');
+            var testResultPath = path.join(__dirname, 'TestResults');
+            var resultFileName = path.join(testResultPath, GetModuleName(taskPath) + '_results.xml');
+            mkdir('-p', testResultPath);
+            
+            if(testFile(testFilePath)){
+                console.log();
+                run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, true);
+            }
+        } else {
+            console.log(`Module ${GetModuleName(taskPath)} is a Powershell Module`);
         }
-
     })
 }
 
+function GetTaskFolder(folderPath, task) {
+    fs.readdirSync(folderPath).map(fileName => {
+
+        var ext = path.extname(fileName);
+        if(ext = ''){
+            console.log(`GetTaskFolder: ${folderPath}`);
+            var taskPath = path.join(folderPath, fileName);
+
+            if(IsTaskFolder(taskPath)){
+                task(taskPath);
+            } else {
+                GetTaskFolder(taskPath, task);
+            }
+        }
+    })
+}
+
+function IsTaskFolder(folderPath) {
+    var taskFile = path.join(folderPath, 'task.json'); 
+    return test('-f', taskFile);
+}
+
+function GetModuleName(taskFolder) {
+    var moduleName = 'UNDEFINED';
+        
+    var taskJsonPath = path.join(taskFolder, 'task.json');
+
+    if(test('-f',taskJsonPath)){
+        var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
+        moduleName = taskLoc.name;
+    }
+
+    return moduleName;
+}
+
+function GetModuleId(taskFolder) {
+    var moduleName = 'UNDEFINED';
+        
+    var taskJsonPath = path.join(taskFolder, 'task.json');
+
+    if(test('-f', taskJsonPath)){
+        var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
+        moduleName = taskLoc.id;
+    }
+
+    return moduleName;
+}
+
+function ParseModule(folderPath, task = '') {
+    var manifestPath = path.join(folderPath, 'vss-extension.json');
+    var manifest = JSON.parse(fs.readFileSync(manifestPath));
+
+    manifest.files.map(filename => { 
+        var taskPath = path.join(folderPath, filename.path);
+        task(taskPath);
+    });
+}
