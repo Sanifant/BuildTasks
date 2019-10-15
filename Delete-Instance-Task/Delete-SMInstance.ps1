@@ -8,6 +8,29 @@ Import-VstsLocStrings "$PSScriptRoot\task.json"
 
 $RootKey = 'HKLM:SOFTWARE\Wow6432Node\LabSystems\SampleManager Server';
 
+function Remove-Data {
+    param (
+        [string]$InstanceName,
+        [string]$InstanceExeFolder
+    )
+    $builder = Join-Path $InstanceExeFolder 'convert_table.exe';
+    $cmdArgList = @(
+        "-instance", "$InstanceName"
+        "-noconfirm"
+        "-tables", "*"
+        "-mode", "destroy"
+    )
+
+    Write-VstsTaskDebug "Executing $builder";
+    $result = & $builder $cmdArgList
+    Write-VstsTaskDebug "\t$result";
+
+    if($LASTEXITCODE -eq 1)
+    {
+        Write-VstsTaskError "Could not delete Data in Database => $result"
+    }    
+}
+
 function Remove-Services {
     param (
         [string]$InstanceName
@@ -29,8 +52,9 @@ function Remove-Services {
 }
 
 try{
-    [string]$InstanceName     = Get-VstsInput -Name InstanceName -Require
-    [boolean]$DropData         = Get-VstsInput -Name DropData -Require -AsBool
+    [string]$InstanceName  = Get-VstsInput -Name InstanceName -Require
+    [boolean]$DropData     = Get-VstsInput -Name DropData -Require -AsBool
+    [boolean]$DropDataBase = Get-VstsInput -Name DropDataBase -Require -AsBool
 
     Write-VstsTaskDebug "Instance to delete: $InstanceName";
     Write-VstsTaskDebug "Dropping Database:  $DropData";
@@ -46,22 +70,7 @@ try{
         
         if ($DropData)
         {
-            $builder = Join-Path $InstanceExeFolder 'convert_table.exe';
-            $cmdArgList = @(
-                "-instance", "$InstanceName"
-                "-noconfirm"
-                "-tables", "*"
-                "-mode", "destroy"
-            )
-
-            Write-VstsTaskDebug "Executing $builder";
-            $result = & $builder $cmdArgList
-            Write-VstsTaskDebug "\t$result";
-
-            if($LASTEXITCODE -eq 1)
-            {
-                Write-VstsTaskError "Could not delete Data in Database => $result"
-            }
+            Remove-Data $InstanceName $InstanceExeFolder
         }
 
         Write-VstsTaskVerbose "Deleting Services"
@@ -74,6 +83,11 @@ try{
         Write-VstsTaskVerbose "Deleting Instance Registry Entries"
         Write-VstsTaskDebug "$InstanceRootKey"
         Remove-Item $RootKey -Force -Recurse
+        
+        if ($DropDataBase)
+        {
+            
+        }
     }
 } catch {
 

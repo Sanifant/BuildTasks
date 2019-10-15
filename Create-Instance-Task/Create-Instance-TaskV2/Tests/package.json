@@ -1,0 +1,24 @@
+{
+  "name": "create.instance.task",
+  "version": "1.0.0",
+  "description": "Creat instance Task using NodeJs",
+  "main": "_suits.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sanifant/BuildTasks"
+  },
+  "bugs": {
+    "url": "https://github.com/Sanifant/BuildTasks/issues"
+  },
+  "author": "Stefan Petersen",
+  "license": "MIT",
+  "dependencies": {
+    "azure-pipelines-task-lib": "2.8.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.4",
+    "@types/q": "^1.5.2"
+  }
+}

@@ -4,19 +4,16 @@
     "friendlyName": "Build SampleManager Instance",
     "description": "Create a new SampleManager Instance",
     "helpMarkDown": "Use this task to create a new SampleManager instance for building and testing your Module",
-    "category": "Build",
-    "visibility": [
-        "Build",
-        "Release"
-    ],
-    "preview" : false,
+    "category": "Azure Pipelines",
+    "preview" : true,
     "$showEnvironmentVariables": true,
     "runsOn": [
-        "Agent"
+        "Agent",
+        "DeploymentGroup"
     ],
     "author": "Stefan Petersen",
     "version": {
-        "Major": 1,
+        "Major": 2,
         "Minor": 0,
         "Patch": 0
     },
@@ -137,8 +134,8 @@
         }
     ],
     "execution": {
-        "PowerShell3": {
-            "target": "Create-SMInstance.ps1"
+        "Node": {
+            "target": "CreateInstance.js"
         }
     }
 }
