@@ -1,8 +1,8 @@
 import * as tl from 'azure-pipelines-task-lib/task';
 import path = require('path');
 
-const RootKey : string = 'HKLM:SOFTWARE\\Wow6432Node\\LabSystems\\';
-const VersionRootKey : string = `${RootKey}SampleManager`;
+const RootKey : string = 'HKLM\\SOFTWARE\\Wow6432Node\\LabSystems\\';
+const VersionRootKey : string = `${RootKey}SampleManager\\`;
 
 async function run() {
     try {
@@ -29,11 +29,14 @@ async function run() {
                 SMVersion = `${major}.${minor}`
             }
             console.debug(SMVersion);
+            var SMRootKey = VersionRootKey + SMVersion;
+            console.debug(SMRootKey);
 
         } else {
             tl.setResult(tl.TaskResult.Failed, `Version ${SMVersion} is not supported`);
             return;            
         }
+
 
     }
     catch (err) {

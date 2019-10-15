@@ -40,3 +40,4 @@ describe('Sample task tests', function () {
         done();
     });
 });
+//# sourceMappingURL=_suite.js.map

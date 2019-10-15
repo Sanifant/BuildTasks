@@ -17,3 +17,4 @@ tmr.setInput('DataBasePassword', 'VGSM');
 tmr.setInput('LicenseServer', 'VGSM');
 tmr.setInput('TrustedConnection', 'false');
 tmr.run();
+//# sourceMappingURL=wrongInstanceFailure.js.map
