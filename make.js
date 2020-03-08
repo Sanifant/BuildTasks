@@ -12,6 +12,8 @@ var buildNode  = util.buildNodeTask;
 var test       = util.test;
 var run        = util.run;
 var mkdir      = util.mkdir;
+var testFile   = util.testFile;
+var testFolder = util.testFolder;
 //var fail = util.fail;
 
 target.build = function() {
@@ -72,7 +74,11 @@ target.test = function() {
                 var resultFileName = path.join(testResultPath, GetModuleName(taskPath) + '_results.xml');
                 mkdir('-p', testResultPath);
                 
+<<<<<<< HEAD
+            if(testFile(testFilePath)){
+=======
                 if(test('-f', testFilePath)){
+>>>>>>> 2e193cea87b4c47b322cab0edfd7dd20ecc2a243
                     console.log();
                     run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, false);
                 }
@@ -89,17 +95,26 @@ target.test = function() {
  * @param {function} task callback to be executed for every folder
  */
 function GetTaskFolder(folderPath, task) {
-    if(test('-d', folderPath))
-    {
-        fs.readdirSync(folderPath).map(fileName => {
-            var taskPath = path.join(folderPath, fileName);
+    if(fs.lstatSync(folderPath).isDirectory()){
+        if(path.basename(folderPath) !== 'node_modules'){
+            fs.readdirSync(folderPath).map(fileName => {
+                var ext = path.extname(fileName);
+                if(ext === ''){
+                    if (fileName.startsWith('.')){
 
-            if(IsTaskFolder(taskPath)){
-                task(taskPath);
-            } else {
-                GetTaskFolder(taskPath, task);
-            }
-        })
+                    } else {
+                        console.log(`GetTaskFolder: ${folderPath}`);
+                        var taskPath = path.join(folderPath, fileName);
+
+                        if(IsTaskFolder(taskPath)){
+                            task(taskPath);
+                        } else {
+                            GetTaskFolder(taskPath, task);
+                        }
+                    }
+                }
+            })
+        }
     }
 }
 
@@ -110,7 +125,7 @@ function GetTaskFolder(folderPath, task) {
  */
 function IsTaskFolder(folderPath) {
     var taskFile = path.join(folderPath, 'task.json'); 
-    return test('-f', taskFile);
+    return testFolder(taskFile);
 }
 
 /**
@@ -122,7 +137,7 @@ function GetModuleName(taskFolder) {
         
     var taskJsonPath = path.join(taskFolder, 'task.json');
 
-    if(test('-f',taskJsonPath)){
+    if(testFolder(taskJsonPath)){
         var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
         moduleName = taskLoc.name;
     }
@@ -139,7 +154,7 @@ function GetModuleId(taskFolder) {
         
     var taskJsonPath = path.join(taskFolder, 'task.json');
 
-    if(test('-f', taskJsonPath)){
+    if(testFolder(taskJsonPath)){
         var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
         moduleName = taskLoc.id;
     }
