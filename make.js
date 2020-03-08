@@ -74,7 +74,11 @@ target.test = function() {
                 var resultFileName = path.join(testResultPath, GetModuleName(taskPath) + '_results.xml');
                 mkdir('-p', testResultPath);
                 
+<<<<<<< HEAD
             if(testFile(testFilePath)){
+=======
+                if(test('-f', testFilePath)){
+>>>>>>> 2e193cea87b4c47b322cab0edfd7dd20ecc2a243
                     console.log();
                     run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, false);
                 }
