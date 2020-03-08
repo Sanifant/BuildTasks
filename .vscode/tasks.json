@@ -12,6 +12,15 @@
             "type": "npm",
             "script": "test",
             "problemMatcher": []
+        },
+        {
+            "type": "npm",
+            "script": "install",
+            "path": "Create-Instance-Task/Create-Instance-TaskV2/",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

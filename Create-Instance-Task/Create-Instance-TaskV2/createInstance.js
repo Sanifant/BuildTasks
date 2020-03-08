@@ -17,8 +17,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const tl = __importStar(require("azure-pipelines-task-lib/task"));
-const RootKey = 'HKLM:SOFTWARE\\Wow6432Node\\LabSystems\\';
-const VersionRootKey = `${RootKey}SampleManager`;
+const RootKey = 'HKLM\\SOFTWARE\\Wow6432Node\\LabSystems\\';
+const VersionRootKey = `${RootKey}SampleManager\\`;
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -43,6 +43,8 @@ function run() {
                     SMVersion = `${major}.${minor}`;
                 }
                 console.debug(SMVersion);
+                var SMRootKey = VersionRootKey + SMVersion;
+                console.debug(SMRootKey);
             }
             else {
                 tl.setResult(tl.TaskResult.Failed, `Version ${SMVersion} is not supported`);
@@ -55,3 +57,4 @@ function run() {
     });
 }
 run();
+//# sourceMappingURL=createInstance.js.map

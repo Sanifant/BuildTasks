@@ -61,32 +61,37 @@ target.test = function() {
         }
     });
 
-    GetTaskFolder(__dirname, function(taskPath){
-
-        if(checkNode(taskPath)){
-            buildNode(taskPath);
-            banner(`Building Module ${GetModuleName(taskPath)}`);
-            var testFilePath = path.join(taskPath, 'Tests', '_suite.js');
-            var testResultPath = path.join(__dirname, 'TestResults');
-            var resultFileName = path.join(testResultPath, GetModuleName(taskPath) + '_results.xml');
-            mkdir('-p', testResultPath);
-            
-            if(testFile(testFilePath)){
-                console.log();
-                run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, true);
+    ParseModule(__dirname, function(folder) {
+        console.log(folder);
+        GetTaskFolder(folder, function(taskPath){
+            if(checkNode(taskPath)){
+                buildNode(taskPath);
+                banner(`Building Module ${GetModuleName(taskPath)}`);
+                var testFilePath = path.join(taskPath, 'Tests', '_suite.js');
+                var testResultPath = path.join(__dirname, 'TestResults');
+                var resultFileName = path.join(testResultPath, GetModuleName(taskPath) + '_results.xml');
+                mkdir('-p', testResultPath);
+                
+                if(test('-f', testFilePath)){
+                    console.log();
+                    run('mocha ' + testFilePath + ' --reporter xunit --reporter-option output=' + resultFileName, false);
+                }
+            } else {
+                console.log(`Module ${GetModuleName(taskPath)} is a Powershell Module`);
             }
-        } else {
-            console.log(`Module ${GetModuleName(taskPath)} is a Powershell Module`);
-        }
+        })
     })
 }
 
+/**
+ * Recursively checka all folders if they are task folders
+ * @param {string} folderPath folder to check
+ * @param {function} task callback to be executed for every folder
+ */
 function GetTaskFolder(folderPath, task) {
-    fs.readdirSync(folderPath).map(fileName => {
-
-        var ext = path.extname(fileName);
-        if(ext = ''){
-            console.log(`GetTaskFolder: ${folderPath}`);
+    if(test('-d', folderPath))
+    {
+        fs.readdirSync(folderPath).map(fileName => {
             var taskPath = path.join(folderPath, fileName);
 
             if(IsTaskFolder(taskPath)){
@@ -94,15 +99,24 @@ function GetTaskFolder(folderPath, task) {
             } else {
                 GetTaskFolder(taskPath, task);
             }
-        }
-    })
+        })
+    }
 }
 
+/**
+ * Checks if the folder contains a task.json file
+ * 
+ * @param {string} folderPath folder to be checked
+ */
 function IsTaskFolder(folderPath) {
     var taskFile = path.join(folderPath, 'task.json'); 
     return test('-f', taskFile);
 }
 
+/**
+ * Returns the Name of the task.json
+ * @param {string} taskFolder folder of the task
+ */
 function GetModuleName(taskFolder) {
     var moduleName = 'UNDEFINED';
         
@@ -116,6 +130,10 @@ function GetModuleName(taskFolder) {
     return moduleName;
 }
 
+/**
+ * Returns the ID of the task.json
+ * @param {string} taskFolder folder of the task
+ */
 function GetModuleId(taskFolder) {
     var moduleName = 'UNDEFINED';
         
@@ -129,6 +147,11 @@ function GetModuleId(taskFolder) {
     return moduleName;
 }
 
+/**
+ * Parses the manifest to find the task folders
+ * @param {string} folderPath folder of the manifest file
+ * @param {function} task callback to be executed per folder
+ */
 function ParseModule(folderPath, task = '') {
     var manifestPath = path.join(folderPath, 'vss-extension.json');
     var manifest = JSON.parse(fs.readFileSync(manifestPath));
