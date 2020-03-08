@@ -12,6 +12,8 @@ var buildNode  = util.buildNodeTask;
 var test       = util.test;
 var run        = util.run;
 var mkdir      = util.mkdir;
+var testFile   = util.testFile;
+var testFolder = util.testFolder;
 //var fail = util.fail;
 
 target.build = function() {
@@ -82,25 +84,32 @@ target.test = function() {
 }
 
 function GetTaskFolder(folderPath, task) {
-    fs.readdirSync(folderPath).map(fileName => {
+    if(fs.lstatSync(folderPath).isDirectory()){
+        if(path.basename(folderPath) !== 'node_modules'){
+            fs.readdirSync(folderPath).map(fileName => {
+                var ext = path.extname(fileName);
+                if(ext === ''){
+                    if (fileName.startsWith('.')){
 
-        var ext = path.extname(fileName);
-        if(ext = ''){
-            console.log(`GetTaskFolder: ${folderPath}`);
-            var taskPath = path.join(folderPath, fileName);
+                    } else {
+                        console.log(`GetTaskFolder: ${folderPath}`);
+                        var taskPath = path.join(folderPath, fileName);
 
-            if(IsTaskFolder(taskPath)){
-                task(taskPath);
-            } else {
-                GetTaskFolder(taskPath, task);
-            }
+                        if(IsTaskFolder(taskPath)){
+                            task(taskPath);
+                        } else {
+                            GetTaskFolder(taskPath, task);
+                        }
+                    }
+                }
+            })
         }
-    })
+    }
 }
 
 function IsTaskFolder(folderPath) {
     var taskFile = path.join(folderPath, 'task.json'); 
-    return test('-f', taskFile);
+    return testFolder(taskFile);
 }
 
 function GetModuleName(taskFolder) {
@@ -108,7 +117,7 @@ function GetModuleName(taskFolder) {
         
     var taskJsonPath = path.join(taskFolder, 'task.json');
 
-    if(test('-f',taskJsonPath)){
+    if(testFolder(taskJsonPath)){
         var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
         moduleName = taskLoc.name;
     }
@@ -121,7 +130,7 @@ function GetModuleId(taskFolder) {
         
     var taskJsonPath = path.join(taskFolder, 'task.json');
 
-    if(test('-f', taskJsonPath)){
+    if(testFolder(taskJsonPath)){
         var taskLoc = JSON.parse(fs.readFileSync(taskJsonPath));
         moduleName = taskLoc.id;
     }

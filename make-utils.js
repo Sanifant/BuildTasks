@@ -72,6 +72,28 @@ var test = function (options, path) {
 }
 exports.test = test;
 
+/**
+ * Test that path exists
+ * @param {string} path - Path to test
+ */
+var testFile = function (path) {
+    var result = shell.test('-e', path);
+    shellAssert();
+    return result;
+}
+exports.testFile = testFile;
+
+/**
+ * Test that path exists
+ * @param {string} path - Path to test
+ */
+var testFolder = function (path) {
+    var result = shell.test('-f', path);
+    shellAssert();
+    return result;
+}
+exports.testFolder = testFolder;
+
 var rp = function (relPath) {
     return path.join(pwd() + '', relPath);
 }
