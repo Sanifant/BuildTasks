@@ -24,7 +24,7 @@
   "author": "Stefan Petersen",
   "license": "MIT",
   "dependencies": {
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "npm": "^6.14.2",
     "tfx-cli": "^0.7.9"
   },
